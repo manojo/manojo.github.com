@@ -12,8 +12,8 @@ I am a PhD student at the [Programming Methods](http://lamp.epfl.ch) lab at EPFL
 as the [Scala lab](http://www.scala-lang.org).
 
 Research-wise, I am interested in embedded DSLs, their expressivity and their performance. I have mostly worked
-on generative programming for parser combinators and optimized data structures so far. This work has been using
-the [LMS](http://scala-lms.github.io) framework.
+on generative programming for parser combinators and optimized data structures so far. This work uses the
+[LMS](http://scala-lms.github.io) framework.
 
 Otherwise, I enjoy music. I perform as an MC in the [Skankin' Society Sound System](http://www.skankinsociety.ch/).
 You can find out more about sound systems [here](http://en.wikipedia.org/wiki/Sound_system_%28Jamaican%29).
