@@ -8,11 +8,11 @@ tags: []
 {% include JB/setup %}
 
 I finally got some intuition for the [fixed-point combinator](http://en.wikipedia.org/wiki/Fixed-point_combinator).
-To be more precise, I got an intuition for why it exists, not why it's defined as it is. Here's how I understood it:
+To be more precise, I got an intuition for why it exists, not why it's defined as it is. Here goes:
 
 ## Recursion in Lambda-Calculus
 
-Let us try to write a simple recursive function, factorial, in the Lambda-Calculus with some extensions
+Let us try to write a simple recursive function, factorial, in the lambda-calculus with some extensions
 for integers and conditionals. Because I know how to write it in Scala, here is a Scala implementation:
 
 {% highlight scala %}
@@ -23,8 +23,8 @@ Here's a first attempt in lambda-calculus:
 
     factorial = λn. if iszero n then 0 else factorial ...
 
-But wait! We cannot re-use `factorial` because it is not a function name in the definition! The only
-way to re-use it is to abstract over it:
+But wait! We cannot re-use `factorial`: it is a *meta-variable*, and has no meaning in the host language. If
+we want to use a value inside an expression, it has to be abstracted over:
 
     g = λfactorial. λn. if iszero n then 0 else factorial (n - 1)
 
@@ -56,29 +56,42 @@ evaluation semantics, is:
     fix = λf. (λx. f (λy. x x y)) (λx. f (λy. x x y))
 
 A handful to write, a mouthful to read, and a mindful to understand! To get an intuition for how it
-works, the best thing to do is to read/work through the example in TAPL, Chapter 5.2. I'm going to
-trust that the definition is correct. Here let's just assure ourselves that we do indeed satisfy the
-type signature above. Running the type inference algorithm in our head, we have no choice but to
-assign `T => T` for `f`. Let's look at
+works, the best thing to do is to read/work through the example in TAPL, Chapter 5.2.
 
-    bar = λx. f (λy. x x y)
+## Mid summary
 
-We know that `f (λy. x x y)` needs to be of type `T`, because it is an application of `f`. Therefore,
-`x` has to be of type `T => T`, and `y` of type `T`. This means that `bar` has type `T => T`. It is
-applied to itself:
+And therein lies my intuition about the existence of the fix combinator:
 
-    (T => T)(T => T)
+  * In lambda-calculus, we cannot recursively re-use a function name without
+    abstracting over it
+  * Once we abstract over it, we need a special function that *collapses* the
+    abstracted type onto itself, or, indeed, calculates its fixed-point.
 
-The return type is naturally `T => T`, and so everything works out.
+## Newbie pitfalls
+
+I used types in my reasoning above. Initially, I tried to go further, by (wrongly) attempting to type
+`fix` in the simply-typed lambda-calculus. Fortunately Sandro enlightened me on the topic. To be
+concise (see TAPL, ex. 9.3.2 for more details), there is no context `Γ`, type `T` such that
+
+    Γ Ͱ x x : T
+
+For a short proof sketch, in the above, `x` needs to be a function type and a value type at the same
+time, which is impossible according to the context rules, where every value has at most one binding.
+The fix combinator above faces this exact issue.
+
+There are two solutions to this problem:
+
+  * Either make `fix` part of the terms, by making it a primitive (TAPL 11.11) and adding
+    evaluation and typing rules to mimic the behaviour of `fix` in a non-typed setting
+  * Or, in the presence of more complicated type systems, for ex. with recursive types, we can
+    implement fix using the base system (TAPL 20). You can find an attempt to implement it in Scala
+    [here](https://gist.github.com/manojo/052a9331696dbc1f2a9e). It is an attempt, because in a
+    call-by-value semantics, I have been forced to assume more on the type `T`. I'm happy to learn
+    a better implementation!
+
 
 ## The bottomline
 
-We need `fix` because:
-
-  * In lambda-calculus, we cannot recursively re-use a function name without abstracting over it
-  * Once we abstract over it, we need a special function that *collapses* the abstracted type onto
-  itself, or, indeed, calculates its fixed-point.
-
-Armed with this new intuition, a good way to get hands dirty is to solve the exercises in TAPL,
-Chapter 5. How does mutual recursion work?
-
+Recursion is an interesting and weird concept. Either it is to be a primitive term, or can be recovered
+from more complex/advanced type systems. Typically many languages choose the former. Languages with
+advanced type systems naturally make it possible for the latter as well.
