@@ -60,22 +60,28 @@ Lambda application and abstraction must work in the lambda calculus domain. We c
 to represent this domain. As application must work, `D` must have an `apply` function, that takes a value of
 type `D`, and returns another value of type `D`. And therefore, we get the following for `D`:
 
-    abstract class D {
-      def apply(d: D): D
-    }
+{% highlight scala %}
+abstract class D {
+  def apply(d: D): D
+}
+{% endhighlight %}
 
 For variables, we can lift values of the `Symbol` class to this domain. They are special in that the `apply`
 function should not evaluate:
 
-    implicit def mkVar(s: Symbol) = new D {
-      def apply(d: D) = throw new Error("does not evaluate")
-    }
+{% highlight scala %}
+implicit def mkVar(s: Symbol) = new D {
+  def apply(d: D) = throw new Error("does not evaluate")
+}
+{% endhighlight %}
 
 For lambda abstraction, we follow our above intuition and get:
 
-    def lam(f: D => D) = new D {
-      def apply(d: D) = f(d)
-    }
+{% highlight scala %}
+def lam(f: D => D) = new D {
+  def apply(d: D) = f(d)
+}
+{% endhighlight %}
 
 And that is essentially the extent of it! You can find a few more examples like boolean and church
 numeral encodings, [here](https://gist.github.com/0e44d3a95344b1585b6c).
