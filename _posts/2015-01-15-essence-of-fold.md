@@ -164,7 +164,7 @@ Well a functor `F` must:
 
 The functor law that must be satisfied can be written as follows: for a given value `t: T`
 
-    makeF(f(t)) === f_F(makeF(f))
+    makeF(f(t)) === f_F(makeF(t))
 
 As per this definition, we can see that `NatF` and `IntListF` already satisfy the first part. There is no
 notion, however, of arrow transformation. An elegant way to do this is to create a special trait `Functor`
