@@ -18,7 +18,7 @@ Warmup: Basic Recursion
 -----------------------
 
 Let's do some simple exercises to get started with. We will have two running examples during the post,
-(Church Numerals)[http://en.wikipedia.org/wiki/Church_encoding], and lists of integers.
+[Church Numerals](http://en.wikipedia.org/wiki/Church_encoding), and lists of integers.
 
 **Church Numerals**
 
