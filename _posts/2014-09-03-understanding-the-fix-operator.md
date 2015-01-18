@@ -95,3 +95,10 @@ There are two solutions to this problem:
 Recursion is an interesting and weird concept. Either it is to be a primitive term, or can be recovered
 from more complex/advanced type systems. Typically many languages choose the former. Languages with
 advanced type systems naturally make it possible for the latter as well.
+
+
+## Related Readings
+
+  * The TAPL book remains of course the reference for this.
+  * There is also a wonderful [article](http://lampwww.epfl.ch/teaching/archive/foundations_of_programming/2001/tutorial/why_of_y.ps)
+    that reconstructs the definition of the Y combinator from scratch.
