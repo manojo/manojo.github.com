@@ -306,7 +306,8 @@ The bottomline
 We have discovered the true meaning of fold. It is one of the basic recursion schemes. It is a generic
 way to evaluate recursive types!
 
-## Related Readings
+Related Readings
+----------------
 
   * TAPL, chapter 20, explains recursive types in more detail.
   * A great FP-Complete [blog article](https://www.fpcomplete.com/user/bartosz/understanding-algebras)
