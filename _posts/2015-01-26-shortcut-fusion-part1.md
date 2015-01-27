@@ -22,7 +22,7 @@ want to fuse:
 {% highlight scala %}
 def dotproduct(xs: List[Int], ys: List[Int]): Int = {
   val zipped = xs zip ys
-  val multiplied = zipped map { case (x, y) => x + y }
+  val multiplied = zipped map { case (x, y) => x * y }
   multiplied.sum
 }
 {% endhighlight %}

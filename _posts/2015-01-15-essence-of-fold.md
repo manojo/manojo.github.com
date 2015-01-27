@@ -10,7 +10,7 @@ tags: []
 In the [last post]({% post_url 2015-01-11-lambda-calculus-direct-embedding %}), we saw that recursive
 types are quite powerful. Using them it is possible to type any lambda expression. In this post, I will
 pursue this exploration of recursive types a bit more. The exploration is focussed on what we can do
-with these recursive types than type theory concepts related to them. We will however go a bit
+with these recursive types, rather than type theory concepts related to them. We will however go a bit
 [categorical](http://en.wikipedia.org/wiki/Category_theory). I will therefore assume some basic knowledge of category
 theory (don't worry, I don't know much about it either, just enough to write this post).
 
