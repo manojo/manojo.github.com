@@ -19,7 +19,8 @@ language that has recursive types, we can create a *direct* embedding for the un
 In this shortish post, I will try and explain how to achieve this embedding. Much thanks to Prof. Viktor
 Kuncak whose example code I have been inspired by.
 
-## Direct embedding
+Direct embedding
+----------------
 
 There is a large amount of terminology in the world of domain specific languages (DSLs). There are
 external and embedded DSLs. The latter mean that we use a host language in which the DSL is implemented,
@@ -32,12 +33,13 @@ this post, a *direct embedding* (for a more detailed discussion, please take a l
   function literals and primitive operators, are mapped to their corresponding constructs in the host language.
 
 
-## The untyped lambda calculus
+The untyped lambda calculus
+---------------------------
 
 Before jumping in with the implementation, a quick reminder of the lambda calculus. At it's core,
 the lambda calculus has 3 concepts: variables, abstraction, and application. The beauty of the system
 is that any other programming language concept (even booleans and numerals) can be encoded in this
-simple language. An term in the lambda calculus has the following abstract syntax
+simple language. A term in the lambda calculus has the following abstract syntax
 
     t ::= x        // variables
         | λx. t    // abstraction
@@ -45,7 +47,8 @@ simple language. An term in the lambda calculus has the following abstract synta
 
 For example, the `id` function, which takes an argument and returns it, is written as `λx. x`.
 
-## A direct embedding
+A direct embedding
+------------------
 
 So how do we go about implementing the direct embedding in Scala? Remember, as per the definition above,
 we do *not* want to represent lambda terms as data types. Rather, we want to find a correspondence between

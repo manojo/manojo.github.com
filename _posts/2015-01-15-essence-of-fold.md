@@ -18,12 +18,12 @@ Warmup: Basic Recursion
 -----------------------
 
 Let's do some simple exercises to get started with. We will have two running examples during the post,
-[Church Numerals](http://en.wikipedia.org/wiki/Church_encoding), and lists of integers.
+[Peano Numbers](http://en.wikipedia.org/wiki/Peano_axioms), and lists of integers.
 
-**Church Numerals**
+**Peano Numbers**
 
-Church Numerals are an encoding of the natural numbers. A number of type `Nat` is either defined as
-zero, or as the successor of another number. In Scala, we can use case classes to represent numerals:
+Peano numbers are an encoding of the natural numbers. A number of type `Nat` is either defined as
+zero, or as the successor of another number. In Scala, we can use case classes to represent these numbers:
 
 {% highlight scala %}
 abstract class Nat
@@ -31,7 +31,7 @@ case object Zero extends Nat
 case class Succ(n: Nat) extends Nat
 {% endhighlight %}
 
-**Exercise 1**: Write a function `nat2Int` that converts a Church numeral to its integer representation:
+**Exercise 1**: Write a function `nat2Int` that converts a Peano number to its integer representation:
 
 {% highlight scala %}
 def nat2Int(n: Nat): Int = ???
@@ -68,7 +68,7 @@ combinator, which we call `Fix`. It's use is analogous to `y`. While `y` helps t
 can unfold arbitrarily many times, `Fix` allows to succinctly specify a type than can be arbitrarily unfolded. Before
 introducing `Fix`, let us first remove the recursion from the types we defined above in the examples.
 
-**Church Numerals, non-recursive**
+**Peano numbers, non-recursive**
 
 Take a look at the following definition:
 
@@ -104,7 +104,7 @@ When in doubt, it is a good idea to use the console, try things out:
     ConsF[ConsF[ConsF[NilF.type]]]
 
 These examples show that the type for a particular value expands with that value. So a very large integer list,
-or a very big Church numeral, would have a very big corresponding type. The intuition behind the `Fix` combinator
+or a very big Peano number, would have a very big corresponding type. The intuition behind the `Fix` combinator
 is to give a succinct type to any arbitrary sized value. Continuing the analogy, we expect `Fix` to satisfy the
 following property:
 
@@ -150,7 +150,7 @@ A categorical diversion
 
 The suffix `F` in both `NatF` and `IntListF` stands for Functor. A functor is a concept in category theory,
 that helps transform objects and arrows in a category C to objects and arrows in another category D,
-respectively. This transformation has to satisfy a law which "preserves the structure" of the objects/arrows
+respectively. This transformation has to satisfy laws which "preserves the structure" of the objects/arrows
 that have been transformed. An endo-functor is a functor where the start category and the end category are the
 same. Please do take a look at a more detailed definition if interested.
 
@@ -158,17 +158,25 @@ For the purpose of this post, we will work with a very specific category, which 
 In this category, objects are types, and arrows are functions. What is a (endo-)functor for **Scala** then?
 Well a functor `F` must:
 
-  * take a type `T` to a type `F[T]`. For a bit of intuition, we can think of this as a function that
-    lifts a value of type `T` to a value of type `F[T]`. Let's call this function `makeF`.
-  * take a function `f: T => U` to a function `f_F: F[T] => F[U]`
+  * take a type `T` to a type `F[T]`.
+  * take a function `f: T => U` to a function `f_F: F[T] => F[U]`. This function
+    is usually known as `fmap` of `map`.
 
-The functor law that must be satisfied can be written as follows: for a given value `t: T`
+There are two functor laws that must be satisfied are:
 
-    makeF(f(t)) === f_F(makeF(t))
+  * Identity: `fmap(id[A]) == id[F[A]]`
+  * Composition: `map(f andThen g) == map(f) andThen map(g)`
 
-As per this definition, we can see that `NatF` and `IntListF` already satisfy the first part. There is no
+
+**Pitfall**
+
+Once might (as I did) want to think of the first property as a function that lifts a
+value of type `T` to a value of type `F[T]`. This is however a wrong intuition (thanks
+Sandro for pointing this out!). A functor takes *types to types*, but not values of types to values of values of types. In case such a function does indeed exist, we may be dealing with an [Applicative Functor](http://en.wikibooks.org/wiki/Haskell/Applicative_Functors).
+
+As per the above definition, we can see that `NatF` and `IntListF` already satisfy the first part. There is no
 notion, however, of arrow transformation. An elegant way to do this is to create a special trait `Functor`
-which forces the implementation of `f_F`, and provide implementations of `f_F` for both `NatF` and `IntListF`.
+which forces the implementation of `fmap`, and provide implementations of `fmap` for both `NatF` and `IntListF`.
 This is known as the type class approach. The `Functor` trait looks as follows:
 
 {% highlight scala %}
@@ -180,8 +188,7 @@ trait Functor[F[_]] {
 }
 {% endhighlight %}
 
-Note that we change the name of `f_F` to `fmap`, which may ring a bell for some of you! Let us provide
-evidences for our example functors:
+Let us provide evidences for our example functors:
 
 {% highlight scala %}
 /**
@@ -214,13 +221,13 @@ object intListFunctor extends Functor[IntListF] {
 Understanding these implementations should be rather straightforward here. We pattern match on the
 variants of each functor and apply the function as appropriate.
 
-**Exercise 7**: Can you show that the functor law holds for the above implementations?
+**Exercise 7**: Can you show that the functor laws hold for the above implementations?
 
 **F-Algebras**
 
 So far, we have defined functors `NatF` and `IntListF`. It has been an interesting exercise, but
 we cannot do anything with them just as of yet. We might, for instance, want to sum elements in a
-list, or get the `Int` representation for a Church numeral (as in exercises 1 and 2). An F-Algebra
+list, or get the `Int` representation for a Peano number (as in exercises 1 and 2). An F-Algebra
 formalizes this concept. An F-Algebra is
 
   * an object `A` (from a category `C`).
@@ -276,8 +283,7 @@ val fixIntListAlgebra: Algebra[IntListF, IntList] =
 
 Why do we even care for `Fix`? It's too mind-bending a type. Because
 
-  1. We just reconstructed recursive types from our type system (aka, we did't use Scala's internal
-     support for them).
+  1. We just reconstructed recursive types from our type system.
   2. Because `Fix` forms a very particular algebra, known as the [initial algebra](http://en.wikipedia.org/wiki/Initial_algebra).
      From this algebra to any other algebra `(a, A)`, there is a `unique` mapping. The type of this unique mapping is
 
