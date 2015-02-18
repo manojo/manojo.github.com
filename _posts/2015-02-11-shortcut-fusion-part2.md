@@ -318,10 +318,13 @@ see these and eliminate them as well!
 The explanation is very [wishiwashi](http://de.wikipedia.org/wiki/Wischiwaschi) admittedly. I hope
 to explain how it works (maybe even work it out) soon enough though. So stay tuned!
 
+The code
+--------
+
+You can find code related to this post [here](https://github.com/manojo/functadelic/blob/master/src/main/scala/barbedwire/Stream.scala), and tests [here](https://github.com/manojo/functadelic/blob/master/src/test/scala/barbedwire/StreamSuite.scala).
 
 References
 ----------
-
 
 1. [Shortcut fusion for accumulating parameters & zip-like functions, Svenningsson, ICFP 2003][1]
 2. [Theory and Practice of Fusion, Hinze et al., IFL 2010][2]

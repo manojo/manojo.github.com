@@ -306,9 +306,13 @@ be useful in practice (who knew!). If we abstract over list building as well, th
 rule to fuse operations together, and get rid of intermediate lists. The approach is not complete
 however, but we'll soon see how we can improve upon it.
 
+The code
+--------
+
+You can find the code related to this post [here](https://github.com/manojo/functadelic/blob/master/src/main/scala/barbedwire/Fold.scala).
+
 References
 ----------
-
 
 1. [A shortcut to deforestation, Gill et al., FPCA 1993][1]
 2. [Theory and Practice of Fusion, Hinze et al., IFL 2010][2]

@@ -312,6 +312,11 @@ The bottomline
 We have discovered the true meaning of fold. It is one of the basic recursion schemes. It is a generic
 way to evaluate recursive types!
 
+The code
+--------
+
+You can find the code related to this post [here](https://github.com/manojo/functadelic/blob/master/src/main/scala/categorical/Functors.scala).
+
 Related Readings
 ----------------
 

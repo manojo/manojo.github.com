@@ -86,11 +86,15 @@ def lam(f: D => D) = new D {
 }
 {% endhighlight %}
 
-And that is essentially the extent of it! You can find a few more examples like boolean and church
-numeral encodings, [here](https://gist.github.com/0e44d3a95344b1585b6c).
+And that is essentially the extent of it!
 
-## The bottomline
+The bottomline
+--------------
 
 The domain type `D` is an encoding of a recursive type. We have seen that with such types, we can
 type any expression in the lambda calculus, by providing an embedding for it.
 
+The code
+--------
+
+You can find the code, with a few more examples like boolean and church numeral encodings, [here](https://github.com/manojo/functadelic/blob/master/src/main/scala/directlambda/LambdaCalculus.scala).

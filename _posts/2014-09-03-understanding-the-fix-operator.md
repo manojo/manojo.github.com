@@ -10,7 +10,8 @@ tags: []
 I finally got some intuition for the [fixed-point combinator](http://en.wikipedia.org/wiki/Fixed-point_combinator).
 To be more precise, I got an intuition for why it exists, not why it's defined as it is. Here goes:
 
-## Recursion in Lambda-Calculus
+Recursion in Lambda-Calculus
+----------------------------
 
 Let us try to write a simple recursive function, factorial, in the lambda-calculus with some extensions
 for integers and conditionals. Because I know how to write it in Scala, here is a Scala implementation:
@@ -58,7 +59,8 @@ evaluation semantics, is:
 A handful to write, a mouthful to read, and a mindful to understand! To get an intuition for how it
 works, the best thing to do is to read/work through the example in TAPL, Chapter 5.2.
 
-## Mid summary
+Mid summary
+-----------
 
 And therein lies my intuition about the existence of the fix combinator:
 
@@ -67,7 +69,8 @@ And therein lies my intuition about the existence of the fix combinator:
   * Once we abstract over it, we need a special function that *collapses* the
     abstracted type onto itself, or, indeed, calculates its fixed-point.
 
-## Newbie pitfalls
+Newbie pitfalls
+---------------
 
 I used types in my reasoning above. Initially, I tried to go further, by (wrongly) attempting to type
 `fix` in the simply-typed lambda-calculus. Fortunately Sandro enlightened me on the topic. To be
@@ -85,19 +88,25 @@ There are two solutions to this problem:
     evaluation and typing rules to mimic the behaviour of `fix` in a non-typed setting
   * Or, in the presence of more complicated type systems, for ex. with recursive types, we can
     implement fix using the base system (TAPL 20). You can find an attempt to implement it in Scala
-    [here](https://gist.github.com/manojo/052a9331696dbc1f2a9e). It is an attempt, because in a
+    [here](https://github.com/manojo/functadelic/blob/master/src/main/scala/ycombinator/Fixed.scala). It is an attempt, because in a
     call-by-value semantics, I have been forced to assume more on the type `T`. I'm happy to learn
     a better implementation!
 
 
-## The bottomline
+The bottomline
+--------------
 
 Recursion is an interesting and weird concept. Either it is to be a primitive term, or can be recovered
 from more complex/advanced type systems. Typically many languages choose the former. Languages with
 advanced type systems naturally make it possible for the latter as well.
 
+The code
+--------
 
-## Related Readings
+You can find the code for this post [here](https://github.com/manojo/functadelic/blob/master/src/main/scala/ycombinator/Fixed.scala).
+
+Related Readings
+----------------
 
   * The TAPL book remains of course the reference for this.
   * There is also a wonderful [article](http://lampwww.epfl.ch/teaching/archive/foundations_of_programming/2001/tutorial/why_of_y.ps)
