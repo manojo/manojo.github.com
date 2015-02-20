@@ -305,7 +305,7 @@ Hint: you can use `enumFromTo` as the equivalent of `from` for lists.
 The bottomline
 --------------
 
-The stream datastructure is a bit a hybrid push-pull structure. Although it primarily is a pull
+The stream datastructure is a bit of a hybrid push-pull structure. Although it primarily is a pull
 structure (we request a new element given a state), because we can create ghost elements, we still
 have the notion of proceeding one element at a time, which is the essence of a push abstraction.
 
