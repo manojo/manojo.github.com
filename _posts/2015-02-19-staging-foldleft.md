@@ -20,7 +20,7 @@ To be more precise:
   bit nicer to optimize in our scheme.
   * We will use staging, or [multi-stage programming](http://en.wikipedia.org/wiki/Multi-stage_programming)\[[1][1]\] as our base technique to
   evaluate intermediate structures away. In particular, we will use the LMS
-  framework \[[2][2]\], \[[3][3]\].
+  framework \[[2][2], [3][3]\].
   * As we saw in the previous posts, the shortcut rule is rather simple. The
   difficult part is optimizing the underlying structures after the shorcut
   rule has been applied. We will focus on this part, and not on the shorcut
@@ -103,7 +103,8 @@ def foldLeft[A, B](z: B, comb: (B, A) => A)(xs: List[A]) : B
 It takes a zero element, a combination function, and applies it to a list. We have seen that the essence of `foldLeft` lies in the first parameter list: it can be applied to other collections as well. So we can abstract the second parameter list away for now. Using the guiding design principles, we come up with the following types:
 
 {% highlight scala %}
-trait FoldLefts extends ScalaOpsPkg with LiftVariables with While {
+trait FoldLefts extends ListOps with IfThenElse with BooleanOps with Variables
+  with OrderingOps with NumericOps with PrimitiveOps with LiftVariables with While  {
 
   /**
    * a type alias for the combination function for
@@ -124,9 +125,10 @@ trait FoldLefts extends ScalaOpsPkg with LiftVariables with While {
 {% endhighlight %}
 
 The enclosing trait `FoldLefts` mixes in some of LMS' building blocks which help
-in composing code generators\[[4][4]\]. In particular, we want to be able to
-write a bit of mutable code (`LiftVariables`) and while loops (`While`). The
-`Manifest` annotation on polymorphic types is specific to code generation.
+in composing code generators\[[4][4]\]. Although it may seem like a long list,
+these are the only building blocks required for this example. In particular, we
+want to be able to write a bit of mutable code (`LiftVariables`) and while loops
+(`While`). The `Manifest` annotation on polymorphic types is specific to code generation.
 
 __Exercise 2__: Pay close attention to the type of `abstract class FoldLeft`.
 What is staged, and what is not?
@@ -214,7 +216,7 @@ below). A few things to pay attention to:
 
   * The use of functions on lists here is in fact on `Rep[List]`, not on `List`.
   This is because we have inherited the ability to operate on `Rep[List]` from
-  the `ScalaOpsPkg` trait.
+  the `ListOps` trait.
   * You may laugh and scorn at the use of concatenation (`++`), which is
   basically algorithmic suicide. You are right. For really efficient code, we
   would use `ListBuffer` instead.
