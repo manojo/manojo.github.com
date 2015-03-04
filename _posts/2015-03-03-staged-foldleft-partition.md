@@ -142,7 +142,7 @@ relay, which does not produce anything as much as relay elements to the right po
 One idea might be to flip things around so that a consumer abstraction takes over
 at the receiving end:
 
-![Consumer monster, image courtesy Nicolas]({{ site.url }}/images/consumer-monster.jpg)[^2]
+![Consumer monster, image courtesy Nicolas]({{ site.url }}/images/consumer-monster.jpg){: .center-image}[^2]
 
 As the above image portrays, that's yet another beast. Maybe we might need it for
 other operations, but for `partition` we can do without it. Let us focus once
