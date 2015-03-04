@@ -7,10 +7,10 @@ tags: []
 ---
 {% include JB/setup %}
 
-In the series on shortcut fusion ([here]({% post_url 2015-01-26-shortcut-fusion-part1 %}) and [here]({% post_url 2015-02-11-shortcut-fusion-part2 %})) we
-discovered two techniques to remove intermediate data structure in list
-operation pipelines. This time, let's actually implement the very first of
-these!
+In the series on shortcut fusion ([here]({% post_url 2015-01-26-shortcut-fusion-part1 %})
+and [here]({% post_url 2015-02-11-shortcut-fusion-part2 %})) we discovered two
+techniques to remove intermediate data structure in list operation pipelines.
+This time, let's actually implement the very first of these!
 
 To be more precise:
 
@@ -18,9 +18,9 @@ To be more precise:
   is because for lists, `foldLeft` and `foldRight` can be used to implement
   similar operations, and it turns out (as we will see) that `foldLeft` is a
   bit nicer to optimize in our scheme.
-  * We will use staging, or [multi-stage programming](http://en.wikipedia.org/wiki/Multi-stage_programming)\[[1][1]\] as our base technique to
-  evaluate intermediate structures away. In particular, we will use the LMS
-  framework \[[2][2], [3][3]\].
+  * We will use staging, or [multi-stage programming](http://en.wikipedia.org/wiki/Multi-stage_programming)\[[1][1]\]
+  as our base technique to evaluate intermediate structures away. In particular,
+  we will use the LMS framework \[[2][2], [3][3]\].
   * As we saw in the previous posts, the shortcut rule is rather simple. The
   difficult part is optimizing the underlying structures after the shorcut
   rule has been applied. We will focus on this part, and not on the shorcut
@@ -43,13 +43,13 @@ will yield a new program `p1`. This new program is behaviourally equivalent to
 evaluated away, and the parts which were explicitly delayed are expressions in
 `p1`. Essentially, MSP is a way to perform safe runtime code generation.
 
-Closely related to MSP is the concept of [partial evaluation](http://en.wikipedia.org/wiki/Partial_evaluation). With this technique, if a program receives a
-static and a dynamic input, the static part of the program is evaluated away, so
-that the residual program (which still needs a dynamic input to yield a result)
-is _specialized_ for the particular static input. This residual program, being
-specialized, is expected to have better performance than to original program.
-The main difference with MSP is that the static parts of the program are
-_inferred_, rather than explicitly specified.
+Closely related to MSP is the concept of [partial evaluation](http://en.wikipedia.org/wiki/Partial_evaluation).
+With this technique, if a program receives a static and a dynamic input, the
+static part of the program is evaluated away, so that the residual program (which
+still needs a dynamic input to yield a result) is _specialized_ for the particular
+static input. This residual program, being specialized, is expected to have better
+performance than to original program. The main difference with MSP is that the
+static parts of the program are _inferred_, rather than explicitly specified.
 
 __LMS__
 
@@ -94,13 +94,18 @@ can take unstaged functions as parameters, and we get inlining for free!
 FoldLeft
 --------
 
-Armed with some knowledge about LMS, let us shift our focus to the main topic. The signature of `foldLeft` is given below:
+Armed with some knowledge about LMS, let us shift our focus to the main topic.
+The signature of `foldLeft` is given below:
 
 {% highlight scala %}
 def foldLeft[A, B](z: B, comb: (B, A) => A)(xs: List[A]) : B
 {% endhighlight %}
 
-It takes a zero element, a combination function, and applies it to a list. We have seen that the essence of `foldLeft` lies in the first parameter list: it can be applied to other collections as well. So we can abstract the second parameter list away for now. Using the guiding design principles, we come up with the following types:
+It takes a zero element, a combination function, and applies it to a list. We
+have seen that the essence of `foldLeft` lies in the first parameter list: it
+can be applied to other collections as well. So we can abstract the second parameter
+list away for now. Using the guiding design principles, we come up with the
+following types:
 
 {% highlight scala %}
 trait FoldLefts extends ListOps with IfThenElse with BooleanOps with Variables
@@ -355,6 +360,20 @@ So it seems we are as powerful as them (we might need to prove this more formall
 ). We are arguably more elegant, because we do not rely on beta-reduction or
 other underlying compiler optimizations. We have implemented a staged library
 instead!
+
+__Update__: I had a few discussions with [Dmitry](https://github.com/DarkDimius),
+and see things in a slightly different light with respect to elegance. As I understand,
+foldr/build fusion is implemented in Haskell for lists (among others). The way
+it is implemented is to use Haskell's
+(rewrite rule system)[https://downloads.haskell.org/~ghc/6.12.2/docs/html/users_guide/rewrite-rules.html]
+to get the shortcut fusion in motion. Haskell's compiler then gets into action,
+and can perform inlining and other optimizations that we do through LMS here.
+That is also arguably quite elegant indeed!
+
+In a language like Scala, the compiler cannot do as well, mainly because of
+virtual dispatch. Working with the LMS library, we have a closed world during code
+generation time. Hence we can gain more optimization power, and safely perform
+inlining etc.
 
 The code
 --------

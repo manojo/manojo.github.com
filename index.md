@@ -29,6 +29,9 @@ that I learnt a while ago, only to have to re-read and re-understand it. So in t
 will mostly write about stuff that I think I understood, so in case I forget, I can come back and see
 how I got it in the first place. Maybe it will improve my writing skills too!
 
+If you happen to find this stuff interesting, please do let me know (by email/github for now)! If you can't
+wait for the next post, subscribe to the rss feed [here](rss.xml).
+
 Most recent posts (last 3)
 ==========================
 

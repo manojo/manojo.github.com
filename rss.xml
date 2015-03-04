@@ -14,10 +14,10 @@ title : RSS Feed
         <pubDate>{{ site.time | date_to_xmlschema }}</pubDate>
         <ttl>1800</ttl>
 
-{% for post in site.posts %}
+{% for post in site.posts limit:5 %}
         <item>
                 <title>{{ post.title }}</title>
-                <description>{{ post.content | xml_escape }}</description>
+                <description>{{ post.description | xml_escape }}</description>
                 <link>{{ site.production_url }}{{ post.url }}</link>
                 <guid>{{ site.production_url }}{{ post.id }}</guid>
                 <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
