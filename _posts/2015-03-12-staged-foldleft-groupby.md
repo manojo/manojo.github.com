@@ -179,6 +179,6 @@ References
 
 No new references this time. Probably worth to take a look at the foldr/build fusion paper again.
 
-1. 1. [A shortcut to deforestation, Gill et al., FPCA 1993][1].
+1. [A shortcut to deforestation, Gill et al., FPCA 1993][1]
 
   [1]: http://dl.acm.org/citation.cfm?id=165214
