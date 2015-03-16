@@ -24,9 +24,9 @@ The `groupBy` function
 
 The `groupBy` function generalises `partition`. But that's not the only reason it
 is interesting. It is a rather common query operation. It is of course used in query
-languages, but it is also not uncommon in spreadsheet-like languages visualize
-results better in spreadsheets. An example would be grouping a list of people by
-their age groups, and then counting the number of people per group.
+languages, but it is also not uncommon in spreadsheet-like languages to visualize
+results better. An example would be grouping a list of people by their age groups,
+and then counting the number of people per group.
 
 In Scala, `groupBy` takes a function as parameter; this function determines which
 group an element belongs to. The results are aggregated in a `HashMap`.
