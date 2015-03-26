@@ -16,7 +16,7 @@ Fusion, aka deforestation
 -------------------------
 
 In programming languages, fusion refers to the act of removing intermediate data
-structures in aprogram. We want to do this so that less memory is allocated, and
+structures in a program. We want to do this so that less memory is allocated, and
 hopefully performance of the program is improved as well. We concentrate in this
 series on lists. Here is an example of a program one might want to fuse:
 
