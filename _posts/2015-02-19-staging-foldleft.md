@@ -37,9 +37,9 @@ this post in a self-contained manner.
 On that note, multi-stage programming (MSP) is a technique to separate the
 compilation of a program into multiple stages. In an MSP setting, we explicitly
 specify which parts of the program can be evaluated at a later stage (and by
-corollary which parts evaluated now). Running such an annotated program `p0`
-will yield a new program `p1`. This new program is behaviourally equivalent to
-`p0`. The difference is that the parts that were not delayed have been
+corollary which parts can be evaluated now). Running such an annotated program
+`p0` will yield a new program `p1`. This new program is behaviourally equivalent
+to `p0`. The difference is that the parts that were not delayed have been
 evaluated away, and the parts which were explicitly delayed are expressions in
 `p1`. Essentially, MSP is a way to perform safe runtime code generation.
 
