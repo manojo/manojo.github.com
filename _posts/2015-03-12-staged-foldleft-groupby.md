@@ -14,7 +14,7 @@ be precise, we were able to successfully write pipelines with partition, and hav
 them fused, so that no intermediate lists were created, and it was done in a single
 traversal.
 
-In this post we will consider a cousin of `partition`, the `groupBy` function.
+In this post we will consider a cousin of `partition`'s, the `groupBy` function.
 While partitioning splits a list into two groups, `groupBy` partitions a list into
 possibly many groups.
 

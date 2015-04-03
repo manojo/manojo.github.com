@@ -164,7 +164,7 @@ The intro example then turns into the following:
 {% highlight scala %}
 val myList: List[Int] = ...
 val partitioned: List[Either[Int, Int]] = partition(myList, (x: Int) => x % 2 == 0)
-partitioned.map { x => x.fold(_ * 2, _ * 3) }
+partitioned.map { x => x.map(_ * 2, _ * 3) }
 
 //if we want to get two lists in the end
 val (evens, odds) =  partitioned.foldLeft ((List[A](), List[A]())) {
@@ -175,7 +175,7 @@ val (evens, odds) =  partitioned.foldLeft ((List[A](), List[A]())) {
 }
 {% endhighlight %}
 
-For mapping on the partitioned elements, we use the `fold` function on `Either`:
+For mapping on the partitioned elements, we use the `map` function on `Either`:
 it takes two functions, one to apply to `Left` elements, one to `Right` elements.
 If we do indeed need two lists at the end, we can fold the list into two separate
 lists.

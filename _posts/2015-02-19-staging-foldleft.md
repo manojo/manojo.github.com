@@ -98,7 +98,7 @@ Armed with some knowledge about LMS, let us shift our focus to the main topic.
 The signature of `foldLeft` is given below:
 
 {% highlight scala %}
-def foldLeft[A, B](z: B, comb: (B, A) => A)(xs: List[A]) : B
+def foldLeft[A, B](z: B, comb: (B, A) => B)(xs: List[A]) : B
 {% endhighlight %}
 
 It takes a zero element, a combination function, and applies it to a list. We
@@ -133,7 +133,8 @@ The enclosing trait `FoldLefts` mixes in some of LMS' building blocks which help
 in composing code generators\[[4][4]\]. Although it may seem like a long list,
 these are the only building blocks required for this example. In particular, we
 want to be able to write a bit of mutable code (`LiftVariables`) and while loops
-(`While`). The `Manifest` annotation on polymorphic types is specific to code generation.
+(`While`). The `Manifest` annotation on polymorphic types is specific to code
+generation.
 
 __Exercise 2__: Pay close attention to the type of `abstract class FoldLeft`.
 What is staged, and what is not?
@@ -365,7 +366,7 @@ __Update__: I had a few discussions with [Dmitry](https://github.com/DarkDimius)
 and see things in a slightly different light with respect to elegance. As I understand,
 foldr/build fusion is implemented in Haskell for lists (among others). The way
 it is implemented is to use Haskell's
-(rewrite rule system)[https://downloads.haskell.org/~ghc/6.12.2/docs/html/users_guide/rewrite-rules.html]
+[rewrite rule system](https://downloads.haskell.org/~ghc/6.12.2/docs/html/users_guide/rewrite-rules.html)
 to get the shortcut fusion in motion. Haskell's compiler then gets into action,
 and can perform inlining and other optimizations that we do through LMS here.
 That is also arguably quite elegant indeed!
