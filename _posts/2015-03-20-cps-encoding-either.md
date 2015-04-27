@@ -320,13 +320,13 @@ The code
 
 The code used in this post can be accessed through the following files:
 
-  * The implementation of `CPSEither` [here](https://github.com/manojo/functadelic/blob/master/src/main/scala/barbedwire/FoldLeft.scala). There is a vanilla Scala (aka non-LMS) version [here](https://github.com/manojo/functadelic/blob/master/src/main/scala/cpsencodings/EitherCPS.scala).
-  * The `partition` function using the CPS encoding [here](https://github.com/manojo/functadelic/blob/master/src/main/scala/lms/util/EitherCPSOps.scala).
-  * A test file [here](https://github.com/manojo/functadelic/blob/master/src/test/scala/barbedwire/FoldLeftSuite.scala).
-  * A check file that contains the generated code [here](https://github.com/manojo/functadelic/blob/master/test-out/partition.check).
+  * The implementation of `CPSEither` [here](https://github.com/manojo/staged-fold-fusion/blob/master/src/main/scala/barbedwire/FoldLeft.scala). There is a vanilla Scala (aka non-LMS) version [here](https://github.com/manojo/functadelic/blob/master/src/main/scala/cpsencodings/EitherCPS.scala).
+  * The `partition` function using the CPS encoding [here](https://github.com/manojo/staged-fold-fusion/blob/master/src/main/scala/lms/util/EitherCPSOps.scala).
+  * A test file [here](https://github.com/manojo/staged-fold-fusion/blob/master/src/test/scala/barbedwire/FoldLeftSuite.scala).
+  * A check file that contains the generated code [here](https://github.com/manojo/staged-fold-fusion/blob/master/test-out/partition.check).
 
 If you want to run this code locally, please follow instructions for setup on
-the readme [here](https://github.com/manojo/functadelic). The `sbt` command to
+the readme [here](https://github.com/manojo/staged-fold-fusion). The `sbt` command to
 run the particular test is `test-only barbedwire.FoldLeftSuite`.
 
 
