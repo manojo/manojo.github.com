@@ -96,11 +96,11 @@ val c1: Rep[Boolean] = ...
 val c2: Rep[Boolean] = ...
 
 val c =
-  if (cond1)
-    if (cond2) mkLeft[Int, String](1)
+  if (c1)
+    if (c2) mkLeft[Int, String](1)
     else mkRight[Int, String]("hi")
   else
-    if (cond2) mkLeft[Int, String](3)
+    if (c2) mkLeft[Int, String](3)
     else mkRight[Int, String]("hello")
 c.apply(lf, rf)
 {% endhighlight %}
