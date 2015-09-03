@@ -32,7 +32,7 @@ __What is a parser?__
 
 A parser is a program that reads some input (usually text) and converts it into
 a structured representation of this input. For example, suppose you are given a
-text file containing some information about tennis players, as follows:
+text file containing some information about tennis players:
 
     firstname: "Roger", lastname: "Federer", grandslams: 18, currentranking: 2
     firstname: "Rafael", lastname: "Nadal", grandslams: 14, currentranking: 8
@@ -41,7 +41,7 @@ text file containing some information about tennis players, as follows:
 If we want to operate on this data, we must first read it and convert it into a
 format that a program can handle. This is where a parser comes in. A possible
 conversion of the above data, in Scala, would be to a list of case classes that
-represent players, as follows:
+represent players:
 
 {% highlight scala %}
 case class TennisPlayer(
@@ -52,10 +52,10 @@ case class TennisPlayer(
 
 parse(aTextFile)
 
-//yields the following result
+//resulting list
 List(
  TennisPlayer("Roger", "Federer", 18, 2),
- TennisPlayer("Rafael", "Nadal", 14, 4),
+ TennisPlayer("Rafael", "Nadal", 14, 8),
  TennisPlayer("Novak", "Djokovic", 18, 1)
 )
 {% endhighlight %}
@@ -69,9 +69,9 @@ There are three traditional ways of writing parsers:
 
   1. Write a parser "by hand". For the above example, that amounts to the following
   pseudocode sequence:
-      - While a text file is not empty, do the following:
-      - read a line, separated by commas.
-      - at each line, read key-value pairs corresponding to attributes of a player.
+      - While a text file is not empty:
+        - read a line, separated by commas.
+        - at each line, read key-value pairs corresponding to attributes of a player.
 
   2. Use a parser generator. You may have noticed that even the text file above
   respects a structured formatting. In other words, it adheres to a certain grammar.
@@ -177,7 +177,7 @@ it does not. We take a similar design route to the one we took
   - The `Parser` companion object defines an `apply` method which acts as
   syntactic sugar.
 
-Packed together, we get the following:
+Packed together, we get this code:
 
 {% highlight scala %}
 trait Parsers {
@@ -299,7 +299,7 @@ Staging Parser Combinators
 --------------------------
 
 So there we are, we built the basics of a parser combinator library. By now, I guess
-you would have realised that with bigger parsers are created from elementary ones
+you would have realised that bigger parsers are created from elementary ones
 through function composition. This is because parsers are represented as functions.
 Which means that if we partially evaluate function composition we get rid of a lot
 of overhead!
@@ -347,10 +347,10 @@ again, remembering that `Parser` is now a code generator helps ease all concerns
 The _implementation_ of the methods themselves does not change much, as we mostly
 delegate the logic to underlying types.
 
-___Note___: for those who have been following the posts, you may have noticed that the
-`Manifest` typeclass is now replaced by the `Typ` typeclass. This does not fundamentally
-affect the behaviour of the partial evaluation engine that we use, but if you are
-interested you can still read all about it
+___Note___: for those who have been keeping up to date with the posts, you may have
+noticed that the `Manifest` typeclass is now replaced by the `Typ` typeclass. This
+does not fundamentally affect the behaviour of the partial evaluation engine that
+we use, but if you are interested you can still read all about it
 [here](https://groups.google.com/forum/#!topic/delite-devel/OnSdvryMWwY).
 
 __CPS encoding ParseResult__
@@ -444,8 +444,7 @@ Note that we have slightly changed the signature of the function `f`, but [Mr.
 Schoenfinkel](https://en.wikipedia.org/wiki/Currying) tells us that both forms
 are equivalent.
 
-As a result, the signature of `Parser` now becomes the following:
-
+As a result, the signature of `Parser` now becomes:
 
 {% highlight scala %}
 abstract class Parser[T: Typ] extends (Rep[Input] => ParseResultCPS[T])
@@ -488,11 +487,13 @@ but it's  worth taking a more in-depth look.
 
 __Exercise 9__: What does the following conditional expression generate?
 
-    (if (c1) Success(t1, in1) else Success(t2, in2)).flatMapWithNext(someF).apply(success, failure)
+    (if (c1) Success(t1, in1) else Success(t2, in2))
+    .flatMapWithNext(someF).apply(success, failure)
 
 This is the evaluation trail:
 
-    (if (c1) Success(t1, in1) else Success(t2, in2)).flatMapWithNext(someF).longPipeline.apply(success, failure)
+    (if (c1) Success(t1, in1) else Success(t2, in2))
+     .flatMapWithNext(someF).longPipeline.apply(success, failure)
     ↪ (if (c1) Success(t1, in1).flatMapWithNext(someF).longPipeline
        else    Success(t2, in2).flatMapWithNext(someF).longPipeline).apply(success, failure)
     ↪ if (c1) Success(t1, in1).flatMapWithNext(someF).longPipeline.apply(success, failure)
@@ -582,7 +583,7 @@ did all this by staying true to our principle of only using libary-style coding.
 In the coming posts, we will add a few more features to this staged combinator
 library, so stay tuned!
 
-_Note_: Much of the work in this post has been previously documented in a paper
+___Note___: Much of the work in this post has been previously documented in a paper
 by my colleagues and me \[[2][2]]. This post acts as a revival of that work along
 with some cleanup and fresh ideas (ex. CPS-encoding ParseResult). If you have been
 through that paper, you will notice that we use a different trick for alternation,
