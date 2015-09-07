@@ -234,13 +234,9 @@ References
 ----------
 
 1. [Packrat Parsing in Scala, Jonnalagedda., Tech. Report 2009][1]
-2. [Accelerating Parser Combinators with Macros, Béguet et al., Scala 2014][4].
-4. [Staged Parser Combinators for Efficient Data Processing, Jonnalagedda et al., OOPSLA 2014][2]
-3. [Monads for Functional Programming, Wadler, 1995][3]
-Same principles as above, but uses macros as the metaprogramming framework of choice.
+2. [Accelerating Parser Combinators with Macros, Béguet et al., Scala 2014][2].
+3. [Staged Parser Combinators for Efficient Data Processing, Jonnalagedda et al., OOPSLA 2014][3]
 
   [1]: http://scala-programming-language.1934581.n4.nabble.com/attachment/1956909/0/packrat_parsers.pdf
   [2]: http://infoscience.epfl.ch/record/200905?ln=en
-  [4]: http://infoscience.epfl.ch/record/203076?ln=en
-  [3]: http://dl.acm.org/citation.cfm?id=734146
-
+  [3]: http://infoscience.epfl.ch/record/203076?ln=en
