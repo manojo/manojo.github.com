@@ -315,9 +315,9 @@ Let's look at what `Fix[F]` means. It already represents the initial algebra
 constructor, aka a function `F[Fix[F]] => Fix[F]`.
 
 We can use the fact that this unique mapping exists. Given some algebra `F[A] => A`,
-we can implement a function from to implement a function from `F[Fix[F]] => A`.
-Because, by definition, `F[Fix[F]] === Fix[F]`, in fact we can implement a function
-from `Fix[F] => A`. This function is called `fold`.
+we can implement a function from `F[Fix[F]] => A`. Because, by definition,
+`F[Fix[F]] === Fix[F]`, in fact we can implement a function from `Fix[F] => A`.
+This function is called `fold`.
 
 {% highlight scala %}
 def fold[F[_], A](alg: F[A] => A)(fx: Fix[F])(implicit ev: Functor[F]): A = {

@@ -49,7 +49,7 @@ So what if we used a pull-based abstraction over lists instead? That is indeed t
 idea behind `destroy/unfoldr` fusion (which we won't cover). In that case, zips
 become easy again, but in this abstraction, fusion becomes tricky for `filter`.
 In a pull-based abstraction, `filter` is implemented in a recursive manner. To
-get some intuition why, I'd recommend reading up the implemented of this function
+get some intuition why, I'd recommend reading up the implementation of this function
 for Scala's [`Iterator`](https://github.com/scala/scala/blob/v2.11.5/src/library/scala/collection/Iterator.scala#L407).
 
 The bottomline is that whatever the abstraction, it is easy to perform fusion if
@@ -342,6 +342,7 @@ The code
 --------
 
 The code used in this post can be accessed through the following files:
+
   * The source [here](https://github.com/manojo/functadelic/blob/master/src/main/scala/barbedwire/Stream.scala)
   * Some tests [here](https://github.com/manojo/functadelic/blob/master/src/test/scala/barbedwire/StreamSuite.scala).
 
