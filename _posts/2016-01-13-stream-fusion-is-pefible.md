@@ -86,7 +86,7 @@ In other words, it either _has a next element_, in which case you can _get_ it, 
 is done. Indeed, we have, here an implementation of functional iterators. Before
 creating a library of iterators, let's exercise some intuition over `unfold` first:
 
-**Exercise 3**: Implement the body of `unfold`, is possible in a tail-recursive
+**Exercise 3**: Implement the body of `unfold`, if possible in a tail-recursive
 way. If the source itself is a `List[A]`, what function do you pass to `unfold`?
 What about a range iterator? Can you also implement `map` for lists?
 
@@ -108,7 +108,7 @@ Now that was easy. What about our good friends `filter` and `flatMap`?
 def filter[A](ls: List[A], p: A => Boolean): List[A] = unfold[List[A], A](???)(ls)
 {% endhighlight %}
 
-That looks trickier. The problem is with the `pull` function. What if an element
+That looks trickier. The problem is with the `step` function. What if an element
 of the `ls` does not satisfy the predicate? What do we generate then? The most
 direct approach seems to create a function that calls itself recursively:
 
@@ -154,15 +154,16 @@ a recursive scheme. Here's a way to achieve that:
 
 We bump satisfying elements by wrapping them in an `Option`, and then collapse
 the list using `foldRight`. The advantage is that we keep our filter operation in
-a single pipeline, but it seems that we create an extra, intermediate list.
+a single pipeline, but it seems that we create an extra, intermediate list. To
+some extent, we are also cheating a bit by using a fold following the unfold.
 
-**Exercise 4**: Implement `flatMap` on lists using `unfold`:
+**Exercise 5**: Implement `flatMap` on lists using `unfold`:
 
 {% highlight scala %}
 def flatMap[A, B](ls: List[A], f: A => List[B]): List[B] = ???
 {% endhighlight %}
 
-This one is even more trickier. While unfolding the outer list `ls`, when we
+This one is even more tricky. While unfolding the outer list `ls`, when we
 encounter an element `a: A`, we get a new list of type `B` by applying `f`. And
 we must pull out these elements one by one. We must somehow store some information
 as to whether we are processing an internal list, or an outer one. Here is a way
@@ -192,7 +193,7 @@ are done. As long as there is an element in the inner list, we return it, as an
 the new inner list. Once again, as the list has bubbles, we need to remove them
 (here using `foldRight`). Before moving on, a final, simpler, exercise:
 
-**Exercise 5**: Implement `zip` on lists using `unfold`:
+**Exercise 6**: Implement `zip` on lists using `unfold`:
 
 {% highlight scala %}
 def zip[A, B](as: List[A], bs: List[B]): List[(A, B)] = ???
@@ -256,7 +257,7 @@ This gives us flexibility in choosing the type of the source when we need to. Al
 this means that we do not know (need to know) the type of a source when dealing
 with an iterator.
 
-**Exercise 6**: You will notice that we are mixing in `FoldLefts`, and that a stream
+**Exercise 7**: You will notice that we are mixing in `FoldLefts`, and that a stream
 has a `toFold` method. Why?
 
 This is a rather nice feature. In the previous section, we looked at unfolding into
@@ -274,7 +275,18 @@ way around. Why?
 
 In fact, we did connect an unfold even back then. We did it very subtly. Indeed,
 a fold created from a list or a range, pulls elements out of these, until the list
-or range has been covered.
+or range has been covered. For example, if we look at the definition of `foldLeft`
+on lists:
+
+{% highlight scala %}
+def foldRight[A, B](z: B)(comb: (A, B) => B)(ls: List[A]): B = ls match {
+  case Nil => z
+  case x :: xs => comb(x, foldRight(z)(comb)(xs))
+}
+{% endhighlight %}
+
+We are unfolding the input list `ls` with the pattern match `x :: xs`. This is
+equivalent to calling the `step` function.
 
 ![The fold-unfold puzzle]({{ site.url }}/images/hylo-puzzle.jpg){: .center-image}
 
@@ -292,7 +304,7 @@ gaps:
   * Plugging a fold to an unfold is a _hylomorphism_, or an _envelope_. Plugging
   a lens to a banana does indeed, pictorially speaking, yield a sort of envelope.
 
-**Exercise 7**: Great, we can plug a fold to an unfold to a fold. Implementing
+**Exercise 8**: Great, we can plug a fold to an unfold to a fold. Implementing
 `filter` and `flatMap` for folds is easier. So why all the fuss?
 
 Indeed, it seems that we can handle quite a few interesting cases, even with `zip`.
@@ -317,7 +329,7 @@ Filter on Streams
 
 Let us now move on, and implement `filter` on streams.
 
-**Exercise 8**: From the two `filter` implementations that use `unfold` above,
+**Exercise 9**: From the two `filter` implementations that use `unfold` above,
 which one should we pick?
 
 Based on previous lessons learnt, we will want to avoid a recursive implementation.
@@ -326,12 +338,15 @@ generate a recursive function (`Rep[A => B]` as opposed to `Rep[A] => Rep[B]`).
 If we want to fuse functions following a filter in the pipeline, it would make it
 harder.
 
-If you have already looked at the implementation of `filter` on `Iterator` in
-the standard Scala [library](https://github.com/scala/scala/blob/v2.11.5/src/library/scala/collection/Iterator.scala#L407),
-you may wonder why that is not an option. As [Dmitry](https://github.com/DarkDimius/)
-pointed it out, we get rid of recursion through clever use of state. But as a result,
-we call `next` at two different places, and therefore risk exploding code generation
-(links for code below). Also, [Amir](https://github.com/amirsh) [tells us](https://github.com/manojo/staged-fold-fusion/commit/701e634ffbe57987f99d5267dccc30d6be17ba85#commitcomment-15253976)
+You may wonder why an implementation of `filter` as in the standard library for
+[`Iterator`](https://github.com/scala/scala/blob/v2.11.5/src/library/scala/collection/Iterator.scala#L407)
+does not work. This implementation does not introduce an extra box, nor is it
+recursive. Instead, it uses mutable variables to maintain the current state of
+a stream. Ultimately, it is an implementation of the recursive solution, but using
+mutable variables and loops. But, as [Dmitry](https://github.com/DarkDimius/)
+pointed it out, we call `next` at two different places, and therefore risk exploding
+code generation (links for code below). Also, [Amir](https://github.com/amirsh)
+[tells us](https://github.com/manojo/staged-fold-fusion/commit/701e634ffbe57987f99d5267dccc30d6be17ba85#commitcomment-15253976)
 that it generates slow code.
 
 It is better to create a box, and preserve a single pipeline. As we saw
@@ -339,7 +354,7 @@ It is better to create a box, and preserve a single pipeline. As we saw
 rid of these boxes using CPS encodings.
 
 
-**Exercise 9**: Should `filter` on streams therefore return a `Stream[OptionCPS[A]]`?
+**Exercise 10**: Should `filter` on streams therefore return a `Stream[OptionCPS[A]]`?
 
 There is a hidden question here. The above implementation of `filter` creates an
 intermediate `List[Option[A]]` and immediately proceeds to remove all bubbles using
@@ -404,7 +419,7 @@ this is the key, and in my opinion, beautiful insight of the Stream Fusion paper
 They present it in the form of the `Step` data type, but it is essentially the same
 thing.
 
-**Exercise 10**: Implement `map`, `filter` and `zip` on `Stream`:
+**Exercise 11**: Implement `map`, `filter` and `zip` on `Stream`:
 
 {% highlight scala %}
 def map[B: Typ](f: Rep[A] => Rep[B]): Stream[B] = ???
@@ -448,7 +463,7 @@ def flatMap[B: Typ](f: Rep[A] => Rep[Stream[B]]): Stream[B]
 
 Let us take a step back, and reason about streams without `Rep`.
 
-**Exercise 11**: What is the inner `Source` type of a Stream resulting from a
+**Exercise 12**: What is the inner `Source` type of a Stream resulting from a
 `flatMap`:
 
 {% highlight scala %}
@@ -528,19 +543,19 @@ thing. Some important points though:
   of the surrounding pairs too. The right solution would be to have a general
   optimization for algebraic data types, which would easily handle both options and
   pairs. The reason I revert to `Option` is that I was lazy to implement such
-  an optimization. [Sebastien and Nicolas](http://www.scala-js.org/) tell me they
-  are close to having a general solution for this anyway, and I trust their code
-  more than mine. Also, if we generate C code instead of Scala, we can generate
-  static structs anyway, and as they are known to be zero-overhead, and stack-allocated,
-  they do not suffer from boxing overhead.
+  an optimization. Sébastien and Nicolas tell me they are close to having a general
+  solution in [Scala.js](http://www.scala-js.org/) for this anyway, and I trust
+  their code more than mine. Also, if we generate C code instead of Scala, we can
+  generate static structs anyway, and as they are known to be zero-overhead, and
+  stack-allocated, they do not suffer from boxing overhead.
 
 **Paying dues, part 2**
 
 For a long time I was struggling to express the idea of knowing the source type
 statically. Then, one fine day, I re-discovered that a similar idea was present
 all along, first in Coutt's thesis \[[5][5]\], and then implemented by Farmer et
-al. in the HERMIT framework \[[3][3]\]. They refer to it as the _name-capturing `flatten`_.
-Moral of the story: read more Haskell papers.
+al. in the HERMIT framework \[[3][3]\]. They refer to it as the _name-capturing
+`flatten`_. Moral of the story: read more Haskell papers.
 
 The bottomline
 --------------
@@ -558,8 +573,12 @@ The code
 The code used in this post can be accessed through the following files:
 
   * The staged stream implementation [here](https://github.com/manojo/staged-fold-fusion/blob/master/src/main/scala/barbedwire/Streams.scala).
+    You can check out a version of Streams with the source as a type member [here](https://github.com/manojo/staged-fold-fusion/blob/master/src/main/scala/barbedwire/Unfold.scala)
   * The corresponding test suite [here](https://github.com/manojo/staged-fold-fusion/blob/master/src/test/scala/barbedwire/StreamSuite.scala).
   * A check file with the generated code [here](https://github.com/manojo/staged-fold-fusion/blob/master/test-out/stream.check).
+  * The stateful implementation of `filter` [here](https://github.com/manojo/staged-fold-fusion/blob/master/src/main/scala/barbedwire/Unfold.scala#L80).
+  The corresponding [test case](https://github.com/manojo/staged-fold-fusion/blob/master/src/test/scala/barbedwire/UnfoldSuite.scala#L98) and resulting
+  [generate code](https://github.com/manojo/staged-fold-fusion/blob/master/test-out/unfold.check#L236).
 
 References
 ----------
