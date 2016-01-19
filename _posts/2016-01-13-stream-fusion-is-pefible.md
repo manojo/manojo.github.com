@@ -343,8 +343,8 @@ You may wonder why an implementation of `filter` as in the standard library for
 does not work. This implementation does not introduce an extra box, nor is it
 recursive. Instead, it uses mutable variables to maintain the current state of
 a stream. Ultimately, it is an implementation of the recursive solution, but using
-mutable variables and loops. But, as [Dmitry](https://github.com/DarkDimius/)
-pointed it out, we call `next` at two different places, and therefore risk exploding
+mutable variables and loops. But, as [DarkDimius](https://github.com/DarkDimius/)
+pointed out, we call `next` at two different places, and therefore risk exploding
 code generation (links for code below). Also, [Amir](https://github.com/amirsh)
 [tells us](https://github.com/manojo/staged-fold-fusion/commit/701e634ffbe57987f99d5267dccc30d6be17ba85#commitcomment-15253976)
 that it generates slow code.
