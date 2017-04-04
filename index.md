@@ -38,7 +38,7 @@ A macro-based Scala library that eliminates abstraction overhead of composing
 parsers. The resulting parsers exhibit performance close to hand-optimized C
 code.
 
-### Results
+##### Results
   * 2-3x performance improvements over Fastparse, a popular parser combinator library in Scala.
   * Order of magnitude performance improvement over standard parser combinators.
   * Within 75% throughput when compared to Nginx HTTP parser, hand-optimized in C.
@@ -54,7 +54,7 @@ An implementation of various fusion optimizations on list-like data structures,
 as a library: the optimizations do not depend on a specific compiler, so can be
 easily ported to other languages.
 
-### Results
+##### Results
 
   * Insights for implementing practical, optimizing libraries: basis work for related projects.
   * [Publication](https://infoscience.epfl.ch/record/209021?ln=en) at Scala 2015. 
