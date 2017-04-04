@@ -9,14 +9,16 @@ Greetings!
 ==========
 
 Greetings everyone! My name is Manohar Jonnalagedda. [You can call me
-Mano](https://www.youtube.com/watch?v=iLkNPjbaPTk). I am a PhD student at the
-[Programming Methods](http://lamp.epfl.ch) lab at EPFL, colloquially known as
-the [Scala lab](http://www.scala-lang.org).
+Mano](https://www.youtube.com/watch?v=iLkNPjbaPTk). I recently finished my PhD
+at the [Programming Methods](http://lamp.epfl.ch) lab at EPFL, colloquially
+known as the [Scala lab](http://www.scala-lang.org). I am currently looking for
+employment opportunities. Do ping me!
 
-Research-wise, I am interested in embedded DSLs, their expressivity and their
-performance. I have mostly worked on generative programming for parser
-combinators and optimized data structures so far. This work uses the [LMS](http
-://scala-lms.github.io) framework.
+My research was on embedded DSLs, their expressivity and their performance. I
+mostly worked on generative programming for parser combinators and optimized
+data structures. You can find my dissertation, "Specialising Parsers for
+Queries", [here](https://infoscience.epfl.ch/record/222871?ln=en). You'll find
+projects related to this research below.
 
 Otherwise, I enjoy music. I perform as an MC in the [Skankin' Society Sound
 System](http://www.skankinsociety.ch/). You can find out more about sound
