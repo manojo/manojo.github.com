@@ -5,10 +5,10 @@ tagline:
 ---
 {% include JB/setup %}
 
-![]({{ site.url }}/images/manohar.jpeg)
-
 Greetings!
 ==========
+
+![]({{ site.url }}/images/manohar.jpeg){width=0.5}.
 
 Hi! My name is Manohar Jonnalagedda. [You can call me
 Mano](https://www.youtube.com/watch?v=iLkNPjbaPTk). I love working in teams to
@@ -48,7 +48,7 @@ domain-specific annotations and error-messages for the privacy-preserving part
 of their code, they can also run full pipelines of non-trivial programs defined
 in a single, cohesive environment.
 
-[[video](https://www.youtube.com/watch?v=HI8QnC8NnI4)| [slides](https://jakob.odersky.com/talks/2021-scalacon.pdf)]
+[[video](https://www.youtube.com/watch?v=HI8QnC8NnI4) | [slides](https://jakob.odersky.com/talks/2021-scalacon.pdf)]
 
 An earlier [talk](https://www.youtube.com/watch?v=44EL11N3tOs) details how we
 initially designed an external DSL for multi-parti computation. Slides can be
