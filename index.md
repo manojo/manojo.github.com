@@ -8,7 +8,7 @@ tagline:
 Greetings!
 ==========
 
-![]({{ site.url }}/images/manohar.jpeg){width=0.5}.
+![]({{ site.url }}/images/manohar.jpeg){:height="200px" width="200px"}.
 
 Hi! My name is Manohar Jonnalagedda. [You can call me
 Mano](https://www.youtube.com/watch?v=iLkNPjbaPTk). I love working in teams to
