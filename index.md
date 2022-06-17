@@ -5,32 +5,67 @@ tagline:
 ---
 {% include JB/setup %}
 
+![]({{ site.url }}/images/manohar.jpeg)
+
 Greetings!
 ==========
 
-Greetings everyone! My name is Manohar Jonnalagedda. [You can call me
-Mano](https://www.youtube.com/watch?v=iLkNPjbaPTk). I recently finished my PhD
-at the [Programming Methods](http://lamp.epfl.ch) lab at EPFL, colloquially
-known as the [Scala lab](http://www.scala-lang.org). I am currently looking for
-employment opportunities. Do ping me!
+Hi! My name is Manohar Jonnalagedda. [You can call me
+Mano](https://www.youtube.com/watch?v=iLkNPjbaPTk). I love working in teams to
+solve technical problems and build elegant solutions around these. By doing
+that, I have gained expertise in privacy-enhancing technologies, language
+design, formal methods, and compilers. I have experience in building software
+from scratch, as well as contributing to larger projects. I also like
+occasionally writing and talking about them.
 
-My research was on embedded DSLs, their expressivity and their performance. I
-mostly worked on generative programming for parser combinators and optimized
-data structures. You can find my dissertation, "Specialising Parsers for
-Queries", [here](https://infoscience.epfl.ch/record/222871?ln=en). You'll find
-projects related to this research below.
+I am currently involved in designing the future of privacy-preserving
+programming at Inpher. In the past I have been involved in combining program
+synthesis and machine learning for a best-of-both worlds approach, at the
+wonderful [MSR
+India](https://www.microsoft.com/en-us/research/lab/microsoft-research-india/).
+I learnt all about compilers and DSLs during my PhD at the [Programming
+Methods](http://lamp.epfl.ch) lab at EPFL, colloquially known as the [Scala
+lab](http://www.scala-lang.org).
 
 Otherwise, I enjoy music. I perform as an MC in the [Skankin' Society Sound
 System](http://www.skankinsociety.ch/). You can find out more about sound
 systems [here](http://en.wikipedia.org/wiki/Sound_system_%28Jamaican%29). You
 can also experience sound system culture by showing up at one of our shows.
 
-If you happen to find this stuff interesting, please do let me know (by
-email/github for now)! If you can't wait for the next post, subscribe to the rss
-feed [here](rss.xml).
+If you happen to find this stuff interesting, please do let me know (by email/github)!
 
 Projects
-==========================
+========
+
+Speakeasy
+---------
+
+Speakeasy is a library for composing privacy-enhancing technologies. It allows
+you to express the general flow of secret and non-secret data as a logical
+graph, and then offers a way to analyze this graph and execute it on different
+backends depending on the need. As a result, a user not only gets
+domain-specific annotations and error-messages for the privacy-preserving part
+of their code, they can also run full pipelines of non-trivial programs defined
+in a single, cohesive environment.
+
+[[video](https://www.youtube.com/watch?v=HI8QnC8NnI4)| [slides](https://jakob.odersky.com/talks/2021-scalacon.pdf)]
+
+An earlier [talk](https://www.youtube.com/watch?v=44EL11N3tOs) details how we
+initially designed an external DSL for multi-parti computation. Slides can be
+found [here](https://jakob.odersky.com/talks/2019-scaladays.pdf).
+
+Synthesis and machine learning for heterogeneous extraction
+-----------------------------------------------------------
+
+In this project, we combine machine learning and program synthesis in order to
+improve automated data extraction from semi-structured documents. The idea is to
+let machine-learning techniques identify common patterns (e.g. flight number,
+departure time) in a small training dataset, and use program synthesis to
+generate a program based on these examples to extract from a test dataset. This
+hybrid approach helps not only extract patterns better, it also helps a user
+understand (via the generated program) how some of these patterns have been
+identified.
+[[publication](https://www.microsoft.com/en-us/research/uploads/prod/2019/04/HeterogeneousExtraction.pdf)]
 
 [Parsequery](https://github.com/manojo/parsequery)
 --------------------------------------------------
@@ -47,6 +82,7 @@ code.
   * Up to 120% throughput when compared to JQ JSON parser.
   * [Publication](https://infoscience.epfl.ch/record/203076?ln=en) at OOPSLA 2014.
   * [Presentation](https://www.youtube.com/watch?v=Cc6QrgqsoVI) at Scala World 2016.
+  * [Dissertation](https://infoscience.epfl.ch/record/222871?ln=en) related to the topic.
 
 [Staged fold fusion](https://github.com/manojo/staged-fold-fusion)
 ------------------------------------------------------------------
@@ -59,7 +95,7 @@ easily ported to other languages.
 ##### Results
 
   * Insights for implementing practical, optimizing libraries: basis work for related projects.
-  * [Publication](https://infoscience.epfl.ch/record/209021?ln=en) at Scala 2015. 
+  * [Publication](https://infoscience.epfl.ch/record/209021?ln=en) at Scala 2015.
 
 [Packrat parsing in Scala](scala-language.1934581.n4.nabble.com/attachment/1956909/0/packrat_parsers.pdf)
 ---------------------------------------------------------------------------------------------------------
