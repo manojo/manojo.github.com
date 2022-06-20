@@ -11,17 +11,16 @@ Greetings!
 ![]({{ site.url }}/images/manohar.jpeg){:height="200px" width="200px"}.
 
 Hi! My name is Manohar Jonnalagedda. [You can call me
-Mano](https://www.youtube.com/watch?v=iLkNPjbaPTk). I love working in teams to
-solve technical problems and build elegant solutions around these. By doing
-that, I have gained expertise in privacy-enhancing technologies, language
-design, formal methods, and compilers. I have experience in building software
-from scratch, as well as contributing to larger projects. I also like
-occasionally writing and talking about them.
+Mano](https://www.youtube.com/watch?v=iLkNPjbaPTk). I like designing tools that
+substantially improve the quality of life of their users, and I love working in
+teams to build these. By doing that, I have gained expertise in
+privacy-enhancing technologies, language design, formal methods, and compilers.
+I have experience in building software from scratch, as well as contributing to
+larger projects. I occasionally write and talk about them.
 
 I am currently involved in designing the future of privacy-preserving
-programming at Inpher. In the past I have been involved in combining program
-synthesis and machine learning for a best-of-both worlds approach, at the
-wonderful [MSR
+programming at Inpher. In the past I worked combining program synthesis and
+machine learning for a best-of-both worlds approach, at the wonderful [MSR
 India](https://www.microsoft.com/en-us/research/lab/microsoft-research-india/).
 I learnt all about compilers and DSLs during my PhD at the [Programming
 Methods](http://lamp.epfl.ch) lab at EPFL, colloquially known as the [Scala
